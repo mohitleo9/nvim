@@ -189,7 +189,72 @@ call plug#begin()
   endif
 
 "}}}
-" core
 
-Plug 'tpope/vim-sensible'
+" Core Plugins {{{
+    Plug 'tpope/vim-sensible'
+    Plug 'AndrewRadev/splitjoin.vim'
+    Plug 'majutsushi/tagbar' "{{{
+        let g:tagbar_sort = 0
+    " }}}
+    Plug 'editorconfig/editorconfig-vim'
+    Plug 'chrisbra/NrrwRgn'
+    Plug 't9md/vim-quickhl' "{{{
+        nmap <leader>m <Plug>(quickhl-manual-this)
+        xmap <leader>m <Plug>(quickhl-manual-this)
+        nmap <leader>M <Plug>(quickhl-manual-reset)
+        xmap <leader>M <Plug>(quickhl-manual-reset)
+    "}}}
+    Plug 'ton/vim-bufsurf'
+    Plug 'epeli/slimux'
+    Plug 'matchit.zip'
+    Plug 'bling/vim-airline' "{{{
+        let g:airline#extensions#tabline#enabled = 1
+        let g:airline_powerline_fonts = 1
+        let g:airline_theme="luna"
+    "}}}
+    Plug 'tpope/vim-surround' "{{{
+    " trial
+        nmap s <Plug>Ysurround
+    " }}}
+    " this plugin overrides the default text objects in vim and first make them multiline and also provides
+    " some new operators such as , _ etc
+    Plug 'wellle/targets.vim'
+    Plug 'tpope/vim-sleuth'
+    Plug 'tpope/vim-repeat'
+    Plug 'Peeja/vim-cdo'
+    Plug 'tpope/vim-eunuch'
+    Plug 'tpope/vim-unimpaired' "{{{
+        nmap <c-up> [e
+        nmap <c-down> ]e
+        vmap <c-up> [egv
+        vmap <c-down> ]egv
+    "}}}
+    "this plugin can toggle between true and false and a whole lot more
+    Plug 'AndrewRadev/switch.vim' " {{{
+        nnoremap <c-c> :Switch<cr>
+    " }}}
+"}}}
+
+" Web Plugins {{{
+  Plug 'groenewege/vim-less'
+  Plug 'cakebaker/scss-syntax.vim'
+  Plug 'gregsexton/MatchTag', {'for': ['html','xml']}
+  Plug 'mattn/emmet-vim'
+"}}}
+
+" Javascript Plugins {{{
+  Plug 'marijnh/tern_for_vim', {'for': ['javascript'], 'do': 'npm install'} " {{{
+      " tern config
+      let g:tern_map_keys=1
+      autocmd FileType javascript nmap <buffer> <leader>jd :TernDef<cr>
+      let g:tern_show_argument_hits='on_hold'
+  " }}}
+  Plug 'mohitleo9/vim-fidget', {'do': 'npm install --production', 'on': 'VimFidget'}
+  Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
+  Plug 'mxw/vim-jsx'
+  Plug 'kchmck/vim-coffee-script'
+  Plug 'elzr/vim-json', {'for': ['javascript','json']}
+  " breaks some coffe shit.
+  Plug 'othree/javascript-libraries-syntax.vim', {'for': ['javascript','typescript']}
+" }}}
 call plug#end()
