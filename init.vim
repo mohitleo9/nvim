@@ -137,18 +137,18 @@ call plug#begin()
     " persistent undo
     if exists('+undofile')
       set undofile
-      set undodir=~/.vim/.cache/undo
+      set undodir=~/.config/nvim/.cache/undo
     endif
 
     " backups
     set backup
-    set backupdir=~/.vim/.cache/backup
+    set backupdir=~/.config/nvim/.cache/backup
 
     " swap files
-    set directory=~/.vim/.cache/swap
+    set directory=~/.config/nvim/.cache/swap
     set noswapfile
 
-    call EnsureExists('~/.vim/.cache')
+    call EnsureExists('~/.config/nvim/.cache')
     call EnsureExists(&undodir)
     call EnsureExists(&backupdir)
     call EnsureExists(&directory)
@@ -191,48 +191,124 @@ call plug#begin()
 "}}}
 
 " Core Plugins {{{
-    Plug 'tpope/vim-sensible'
-    Plug 'AndrewRadev/splitjoin.vim'
-    Plug 'majutsushi/tagbar' "{{{
-        let g:tagbar_sort = 0
-    " }}}
-    Plug 'editorconfig/editorconfig-vim'
-    Plug 'chrisbra/NrrwRgn'
-    Plug 't9md/vim-quickhl' "{{{
-        nmap <leader>m <Plug>(quickhl-manual-this)
-        xmap <leader>m <Plug>(quickhl-manual-this)
-        nmap <leader>M <Plug>(quickhl-manual-reset)
-        xmap <leader>M <Plug>(quickhl-manual-reset)
-    "}}}
-    Plug 'ton/vim-bufsurf'
-    Plug 'epeli/slimux'
-    Plug 'matchit.zip'
-    Plug 'bling/vim-airline' "{{{
-        let g:airline#extensions#tabline#enabled = 1
-        let g:airline_powerline_fonts = 1
-        let g:airline_theme="luna"
-    "}}}
-    Plug 'tpope/vim-surround' "{{{
-    " trial
-        nmap s <Plug>Ysurround
-    " }}}
-    " this plugin overrides the default text objects in vim and first make them multiline and also provides
-    " some new operators such as , _ etc
-    Plug 'wellle/targets.vim'
-    Plug 'tpope/vim-sleuth'
-    Plug 'tpope/vim-repeat'
-    Plug 'Peeja/vim-cdo'
-    Plug 'tpope/vim-eunuch'
-    Plug 'tpope/vim-unimpaired' "{{{
-        nmap <c-up> [e
-        nmap <c-down> ]e
-        vmap <c-up> [egv
-        vmap <c-down> ]egv
-    "}}}
-    "this plugin can toggle between true and false and a whole lot more
-    Plug 'AndrewRadev/switch.vim' " {{{
-        nnoremap <c-c> :Switch<cr>
-    " }}}
+  Plug 'tpope/vim-sensible'
+  Plug 'AndrewRadev/splitjoin.vim'
+  Plug 'majutsushi/tagbar' "{{{
+      let g:tagbar_sort = 0
+  " }}}
+  Plug 'editorconfig/editorconfig-vim'
+  Plug 'chrisbra/NrrwRgn'
+  Plug 't9md/vim-quickhl' "{{{
+      nmap <leader>m <Plug>(quickhl-manual-this)
+      xmap <leader>m <Plug>(quickhl-manual-this)
+      nmap <leader>M <Plug>(quickhl-manual-reset)
+      xmap <leader>M <Plug>(quickhl-manual-reset)
+  "}}}
+  Plug 'ton/vim-bufsurf'
+  Plug 'epeli/slimux'
+  Plug 'matchit.zip'
+  Plug 'bling/vim-airline' "{{{
+      let g:airline#extensions#tabline#enabled = 1
+      let g:airline_powerline_fonts = 1
+      let g:airline_theme="luna"
+  "}}}
+  Plug 'tpope/vim-surround' "{{{
+  " trial
+      nmap s <Plug>Ysurround
+  " }}}
+  " this plugin overrides the default text objects in vim and first make them multiline and also provides
+  " some new operators such as , _ etc
+  Plug 'wellle/targets.vim'
+  Plug 'tpope/vim-sleuth'
+  Plug 'tpope/vim-repeat'
+  Plug 'Peeja/vim-cdo'
+  Plug 'tpope/vim-eunuch'
+  Plug 'mhinz/vim-signify' "{{{
+    let g:signify_update_on_focusgained = 1
+  "}}}
+  Plug 'tpope/vim-fugitive' "{{{
+    nnoremap <silent> <leader>gs :Gstatus<CR>
+    nnoremap <silent> <leader>gd :Gdiff<CR>
+    nnoremap <silent> <leader>gc :Gcommit<CR>
+    nnoremap <silent> <leader>gb :Gblame<CR>
+    nnoremap <silent> <leader>gg :Ggrep<cword><CR>
+    nnoremap <silent> <leader>gl :Glog<CR>
+    nnoremap <silent> <leader>gp :Git push<CR>
+    nnoremap <silent> <leader>gw :Gwrite<CR>
+    nnoremap <silent> <leader>gr :Gremove<CR>
+
+    augroup _fugitive_buffer_delete
+      autocmd!
+      autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
+      autocmd BufReadPost fugitive://* set bufhidden=delete
+    augroup END
+  "}}}
+  Plug 'tpope/vim-git'
+  Plug 'gregsexton/gitv', {'on': 'Gitv'} "{{{
+    let g:Gitv_DoNotMapCtrlKey = 0
+    augroup _gitv_mappings
+      autocmd!
+      autocmd User gitv nnoremap <silent> <leader>gv :Gitv<CR>
+      autocmd User gitv nnoremap <silent> <leader>gV :Gitv!<CR>
+    augroup END
+  "}}}
+  Plug 'tpope/vim-unimpaired' "{{{
+      nmap <c-up> [e
+      nmap <c-down> ]e
+      vmap <c-up> [egv
+      vmap <c-down> ]egv
+  "}}}
+  "this plugin can toggle between true and false and a whole lot more
+  Plug 'AndrewRadev/switch.vim' " {{{
+      nnoremap <c-c> :Switch<cr>
+  " }}}
+  Plug 'SirVer/ultisnips' "{{{
+    let g:UltiSnipsExpandTrigger = '<C-j>'
+    let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+    let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+  "}}}
+  Plug 'tpope/vim-endwise'
+  Plug 'thinca/vim-visualstar'
+  Plug 'tomtom/tcomment_vim'
+  Plug 'terryma/vim-multiple-cursors'
+  Plug 'Raimondi/delimitMate'
+  Plug 'kana/vim-textobj-user'
+  Plug 'kana/vim-textobj-line'
+  Plug 'kana/vim-textobj-indent'
+  Plug 'kana/vim-textobj-entire'
+  Plug 'bufkill.vim'
+  Plug 'mhinz/vim-startify'
+  Plug 'Lokaltog/vim-easymotion' "{{{
+  " replace the default search not kidding
+  " use smartcase
+    let g:EasyMotion_smartcase = 1
+    map  / <Plug>(easymotion-sn)
+    omap / <Plug>(easymotion-tn)
+    map  n <Plug>(easymotion-next)
+    map  N <Plug>(easymotion-prev)
+  "}}}
+  Plug 'mileszs/ack.vim' "{{{
+    if executable('ag')
+      let g:ackprg = "ag --hidden --nogroup --column --smart-case --follow"
+    endif
+  "}}}
+  Plug 'kien/ctrlp.vim', "{{{
+  let g:ctrlp_use_caching = 1
+  let g:ctrlp_clear_cache_on_exit=1
+  let g:ctrlp_max_height=40
+  let g:ctrlp_show_hidden=1
+  let g:ctrlp_follow_symlinks=1
+  let g:ctrlp_working_path_mode = 'ra'
+  let g:ctrlp_max_files=20000
+  let g:ctrlp_cache_dir='~/.config/nvim/.cache/ctrlp'
+  let g:ctrlp_reuse_window='startify'
+  let g:ctrlp_custom_ignore = {
+        \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+        \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+  if executable('ag')
+    let g:ctrlp_user_command = 'ag --hidden %s --nocolor -l -g ""'
+  endif
+  "}}}
 "}}}
 
 " Web Plugins {{{
@@ -257,4 +333,153 @@ call plug#begin()
   " breaks some coffe shit.
   Plug 'othree/javascript-libraries-syntax.vim', {'for': ['javascript','typescript']}
 " }}}
+
+" Python Plugins {{{
+  Plug 'klen/python-mode', {'for': ['python']} "{{{
+    let g:pymode_rope=0
+    let g:pymode_run = 0
+    let g:pymode_lint = 0
+    let g:pymode_folding = 0
+  "}}}
+  Plug 'davidhalter/jedi-vim', {'for': ['python']} "{{{
+    let g:jedi#popup_on_dot=0
+  "}}}
+" }}}
+" color schemes {{{
+  Plug 'morhetz/gruvbox'
+  Plug 'altercation/vim-colors-solarized' "{{{
+    " let g:solarized_termcolors=256
+    " let g:solarized_termtrans=1
+  "}}}
+  Plug 'nanotech/jellybeans.vim'
+  Plug 'tomasr/molokai'
+  " this plugin highilghts the color for hex value
+  Plug 'lilydjwg/colorizer' " {{{
+    let g:colorizer_nomap = 1
+  " }}}
+  Plug 'morhetz/gruvbox'
+  Plug 'chriskempson/vim-tomorrow-theme'
+  Plug 'chriskempson/base16-vim'
+  Plug 'w0ng/vim-hybrid'
+  Plug 'sjl/badwolf'
+  Plug 'junegunn/seoul256.vim'
+  Plug 'zeis/vim-kolor' "{{{
+    let g:kolor_underlined=1
+  "}}}
+
+"}}}
+" mappings {{{
+"  eval vimscript by line or visual selection
+  nmap <silent> <leader>e :call Source(line('.'), line('.'))<CR>
+  vmap <silent> <leader>e :call Source(line('v'), line('.'))<CR>
+
+  " grep operator (technically ack)
+  nnoremap g/ :set operatorfunc=GrepOperator<cr>g@
+  vnoremap g/ :<c-u>call GrepOperator(visualmode())<cr>
+
+  nnoremap <leader>w :w<cr>
+
+  " remap arrow keys
+  nnoremap <left> :bprev<CR>
+  nnoremap <right> :bnext<CR>
+  nnoremap <up> :tabnext<CR>
+  nnoremap <down> :tabprev<CR>
+
+  " sane regex {{{
+    nnoremap ? ?\v
+    vnoremap ? ?\v
+    nnoremap :s/ :s/\v
+  " }}}
+
+  " command-line window {{{
+    nnoremap q: q:i
+    nnoremap q/ q/i
+    nnoremap q? q?i
+  " }}}
+
+  " folds {{{
+    nnoremap zr zr:echo &foldlevel<cr>
+    nnoremap zm zm:echo &foldlevel<cr>
+    nnoremap zR zR:echo &foldlevel<cr>
+    nnoremap zM zM:echo &foldlevel<cr>
+  " }}}
+
+  " screen line scroll
+  nnoremap <silent> j gj
+  nnoremap <silent> k gk
+
+  " auto center {{{
+    nnoremap <silent> n nzz
+    nnoremap <silent> N Nzz
+    nnoremap <silent> * *zz
+    nnoremap <silent> # #zz
+    nnoremap <silent> g* g*zz
+    nnoremap <silent> g# g#zz
+    nnoremap <silent> <C-o> <C-o>zz
+    nnoremap <silent> <C-i> <C-i>zz
+  "}}}
+
+  " reselect visual block after indent
+  vnoremap < <gv
+  vnoremap > >gv
+
+  " reselect last paste
+  nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+  " shortcuts for windows {{{
+    nnoremap <leader>v <C-w>v<C-w>l
+    nnoremap <leader>s <C-w>s
+    nnoremap <leader>vsa :vert sba<cr>
+    nnoremap <C-h> <C-w>h
+    nnoremap <C-j> <C-w>j
+    nnoremap <C-k> <C-w>k
+    nnoremap <C-l> <C-w>l
+  "}}}
+
+  " make Y consistent with C and D. See :help Y.
+  nnoremap Y y$
+
+  " window killer
+  nnoremap <silent> Q :call CloseWindowOrKillBuffer()<cr>
+  " general
+  nnoremap <BS> :set hlsearch! hlsearch?<cr>
+
+  " helpers for profiling {{{
+    nnoremap <silent> <leader>dd :exe ":profile start profile.log"<cr>:exe ":profile func *"<cr>:exe ":profile file *"<cr>
+    nnoremap <silent> <leader>dp :exe ":profile pause"<cr>
+    nnoremap <silent> <leader>dc :exe ":profile continue"<cr>
+    nnoremap <silent> <leader>dq :exe ":profile pause"<cr>:noautocmd qall!<cr>
+  "}}}
+  "
+  "better yank and paste to the end of line
+  "easy to repeat paste
+  "this is genius credit http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
+  vnoremap <silent> y y`]
+  vnoremap <silent> p p`]
+  nnoremap <silent> p p`]
+"}}}
+" commands {{{
+  command! -bang Q q<bang>
+  command! -bang QA qa<bang>
+  command! -bang Qa qa<bang>
+"}}}
+
+" autocmd {{{
+  " go back to previous position of cursor if any
+  augroup variousCommands
+    autocmd!
+    autocmd BufReadPost *
+          \ if line("'\"") > 0 && line("'\"") <= line("$") |
+          \  exe 'normal! g`"zvzz' |
+          \ endif
+    autocmd FileType javascript,scss,css,python,coffee,vim,clojure autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+    autocmd FileType css,scss setlocal foldmethod=marker foldmarker={,}
+    autocmd FileType css,scss nnoremap <silent> <leader>S vi{:sort<CR>
+    autocmd FileType python setlocal foldmethod=indent
+    autocmd FileType markdown setlocal nolist
+    autocmd FileType vim setlocal fdm=indent keywordprg=:help
+  augroup END
+"}}}
 call plug#end()
+
+colorscheme molokai
