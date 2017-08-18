@@ -94,6 +94,7 @@ call plug#begin()
   set showfulltag
   set modeline
   set modelines=5
+  set termguicolors
   set nosol                                           "this keeps the cursor in the same column when you hit G in visual block mode
   set noshelltemp                                     "use pipes
 
@@ -192,6 +193,7 @@ call plug#begin()
 
 " Core Plugins {{{
   Plug 'tpope/vim-sensible'
+  Plug 'benekastah/neomake'
   Plug 'AndrewRadev/splitjoin.vim'
   Plug 'majutsushi/tagbar' "{{{
       let g:tagbar_sort = 0
@@ -206,12 +208,12 @@ call plug#begin()
   "}}}
   Plug 'ton/vim-bufsurf'
   Plug 'epeli/slimux'
-  Plug 'matchit.zip'
-  Plug 'bling/vim-airline' "{{{
+  Plug 'vim-airline/vim-airline' "{{{
       let g:airline#extensions#tabline#enabled = 1
       let g:airline_powerline_fonts = 1
-      let g:airline_theme="luna"
   "}}}
+  Plug 'vim-airline/vim-airline-themes'
+      let g:airline_theme="luna"
   Plug 'tpope/vim-surround' "{{{
   " trial
       nmap s <Plug>Ysurround
@@ -276,7 +278,6 @@ call plug#begin()
   Plug 'kana/vim-textobj-line'
   Plug 'kana/vim-textobj-indent'
   Plug 'kana/vim-textobj-entire'
-  Plug 'bufkill.vim'
   Plug 'mhinz/vim-startify'
   Plug 'Lokaltog/vim-easymotion' "{{{
   " replace the default search not kidding
@@ -347,10 +348,11 @@ call plug#begin()
 " }}}
 " color schemes {{{
   Plug 'morhetz/gruvbox'
-  Plug 'altercation/vim-colors-solarized' "{{{
-    " let g:solarized_termcolors=256
-    " let g:solarized_termtrans=1
-  "}}}
+  " Plug 'altercation/vim-colors-solarized' "{{{
+  "   " let g:solarized_termcolors=256
+  "   " let g:solarized_termtrans=1
+  " "}}}
+  Plug 'icymind/NeoSolarized'
   Plug 'nanotech/jellybeans.vim'
   Plug 'tomasr/molokai'
   " this plugin highilghts the color for hex value
@@ -482,4 +484,4 @@ call plug#begin()
 "}}}
 call plug#end()
 
-colorscheme molokai
+colorscheme NeoSolarized
