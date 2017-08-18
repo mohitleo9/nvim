@@ -484,4 +484,5 @@ call plug#begin()
 "}}}
 call plug#end()
 
+set background=dark
 colorscheme NeoSolarized
