@@ -4,6 +4,8 @@
 call plug#begin() "{{{
 " Core Plugins {{{
 Plug 'tpope/vim-sensible'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
