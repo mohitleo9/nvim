@@ -5,6 +5,7 @@ call plug#begin() "{{{
 " Core Plugins {{{
 Plug 'tpope/vim-sensible'
 Plug 'w0rp/ale'
+Plug 'itchyny/lightline.vim'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 't9md/vim-quickhl'
@@ -52,10 +53,7 @@ Plug 'klen/python-mode', {'for': ['python']}
 
 " color schemes {{{
 Plug 'icymind/NeoSolarized'
-Plug 'frankier/neovim-colors-solarized-truecolor-only' "{{{
-"   " let g:solarized_termcolors=256
-"   " let g:solarized_termtrans=1
-" "}}}
+Plug 'lifepillar/vim-solarized8'
 "}}}
 
 call plug#end()
@@ -171,10 +169,6 @@ set display+=lastline
 set wildmenu                                        "show list for autocomplete
 set wildmode=list:longest,full
 set wildignorecase
-" remove the wildignore as it is not used and it breaks fugitive
-" https://github.com/tpope/vim-fugitive/issues/121
-" set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store
-
 set splitbelow
 set splitright
 
@@ -338,6 +332,21 @@ let g:ale_linters = {
 let g:ale_lint_on_text_changed = 'never'
 "}}}
 
+" 'itchyny/lightline.vim' "{{{
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ [ 'filetype' ] ]
+      \ },
+      \ 'component': {
+      \   'helloworld': 'Hello, world!'
+      \ },
+      \ }
+" }}}
+
+
 " " majutsushi/tagbar {{{
 "     let g:tagbar_sort = 0
 " " }}}
@@ -497,6 +506,6 @@ augroup END
 
 
 " ColorScheme {{{
-set background=dark
-colorscheme solarized
+" prevents errors.
+silent! colorscheme solarized8_dark
 " }}}
