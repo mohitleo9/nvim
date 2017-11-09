@@ -4,25 +4,12 @@
 call plug#begin() "{{{
 " Core Plugins {{{
 Plug 'tpope/vim-sensible'
-Plug 'w0rp/ale' "{{{
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '∆'
-let g:ale_linters = {
-      \   'javascript': ['eslint'],
-      \}
-let g:ale_lint_on_text_changed = 'never'
-"}}}
+Plug 'w0rp/ale'
 " Plug 'AndrewRadev/splitjoin.vim'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-"     let g:tagbar_sort = 0
 Plug 'editorconfig/editorconfig-vim'
 " Plug 'chrisbra/NrrwRgn'
-Plug 't9md/vim-quickhl' "{{{
-nmap <leader>m <Plug>(quickhl-manual-this)
-xmap <leader>m <Plug>(quickhl-manual-this)
-nmap <leader>M <Plug>(quickhl-manual-reset)
-xmap <leader>M <Plug>(quickhl-manual-reset)
-"}}}
+Plug 't9md/vim-quickhl'
 " Plug 'ton/vim-bufsurf'
 " Plug 'epeli/slimux'
 " Plug 'vim-airline/vim-airline' "{{{
@@ -31,63 +18,19 @@ xmap <leader>M <Plug>(quickhl-manual-reset)
 " "}}}
 " Plug 'vim-airline/vim-airline-themes'
 "     let g:airline_theme="luna"
-Plug 'tpope/vim-surround' "{{{
-" trial
-nmap s <Plug>Ysurround
-" }}}
-" this plugin overrides the default text objects in vim and first make them multiline and also provides
-" some new operators such as , _ etc
+Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-repeat'
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " let g:deoplete#enable_at_startup = 1
 " Plug 'tpope/vim-eunuch'
-Plug 'mhinz/vim-signify' "{{{
-let g:signify_update_on_focusgained = 1
-"}}}
-Plug 'tpope/vim-fugitive' "{{{
-nnoremap <silent> <leader>gs :Gstatus<CR>
-nnoremap <silent> <leader>gd :Gdiff<CR>
-nnoremap <silent> <leader>gc :Gcommit<CR>
-nnoremap <silent> <leader>gb :Gblame<CR>
-nnoremap <silent> <leader>gg :Ggrep<cword><CR>
-nnoremap <silent> <leader>gl :Glog<CR>
-nnoremap <silent> <leader>gp :Git push<CR>
-nnoremap <silent> <leader>gw :Gwrite<CR>
-nnoremap <silent> <leader>gr :Gremove<CR>
-
-augroup _fugitive_buffer_delete
-  autocmd!
-  autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
-  autocmd BufReadPost fugitive://* set bufhidden=delete
-augroup END
-"}}}
+Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
-" Plug 'gregsexton/gitv', {'on': 'Gitv'} "{{{
-"   let g:Gitv_DoNotMapCtrlKey = 0
-"   augroup _gitv_mappings
-"     autocmd!
-"     autocmd User gitv nnoremap <silent> <leader>gv :Gitv<CR>
-"     autocmd User gitv nnoremap <silent> <leader>gV :Gitv!<CR>
-"   augroup END
-" "}}}
-Plug 'tpope/vim-unimpaired' "{{{
-nmap <c-up> [e
-nmap <c-down> ]e
-vmap <c-up> [egv
-vmap <c-down> ]egv
-"}}}
-"this plugin can toggle between true and false and a whole lot more
-Plug 'AndrewRadev/switch.vim' " {{{
-nnoremap <c-c> :Switch<cr>
-" }}}
-Plug 'SirVer/ultisnips' "{{{
-let g:UltiSnipsExpandTrigger = '<C-j>'
-let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-"}}}
-" Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-unimpaired'
+Plug 'AndrewRadev/switch.vim'
+Plug 'SirVer/ultisnips'
 Plug 'thinca/vim-visualstar'
 Plug 'tomtom/tcomment_vim'
 Plug 'terryma/vim-multiple-cursors'
@@ -97,87 +40,26 @@ Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-entire'
 Plug 'mhinz/vim-startify'
-Plug 'Lokaltog/vim-easymotion' "{{{
-" replace the default search not kidding
-" use smartcase
-let g:EasyMotion_smartcase = 1
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
-"}}}
-
-Plug 'mhinz/vim-grepper' "{{{
-command! -nargs=* Ack GrepperAg <args>
-
-let g:grepper = {}
-let g:grepper.highlight=1
-let g:grepper.quickfix = 1
-let g:grepper.open = 1
-let g:grepper.stop = 1000
-let g:grepper.side = 1
-
-"}}}
-Plug 'kien/ctrlp.vim', "{{{
-let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit=1
-let g:ctrlp_max_height=40
-let g:ctrlp_show_hidden=1
-let g:ctrlp_follow_symlinks=1
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_max_files=20000
-let g:ctrlp_cache_dir='~/.config/nvim/.cache/ctrlp'
-let g:ctrlp_reuse_window='startify'
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-      \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
-if executable('ag')
-  let g:ctrlp_user_command = 'ag --hidden %s --nocolor -l -g ""'
-endif
-"}}}
+Plug 'Lokaltog/vim-easymotion'
+Plug 'mhinz/vim-grepper'
+Plug 'kien/ctrlp.vim'
 "}}}
 
 " Web Plugins {{{
 Plug 'groenewege/vim-less'
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'gregsexton/MatchTag', {'for': ['html','xml']}
-" Plug 'mattn/emmet-vim'
-Plug 'Valloric/MatchTagAlways' "{{{
-let g:mta_use_matchparen_group=0
-let g:mta_set_default_matchtag_color=0
-let g:mta_filetypes = {
-      \ 'javascript.jsx': 1,
-      \ 'html' : 1,
-      \ 'xhtml' : 1,
-      \ 'xml' : 1,
-      \ 'jinja' : 1
-      \}
-""}}}
+Plug 'Valloric/MatchTagAlways'
 "}}}
 
 " Javascript Plugins {{{
 " Plug 'marijnh/tern_for_vim', {'for': ['javascript'], 'do': 'npm install'} " {{{
-"     " tern config
-"     let g:tern_map_keys=1
-"     autocmd FileType javascript nmap <buffer> <leader>jd :TernDef<cr>
-"     let g:tern_show_argument_hits='on_hold'
-" " }}}
 " Plug 'mohitleo9/vim-fidget', {'do': 'npm install --production', 'on': 'VimFidget'}
 Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
-" Plug 'mxw/vim-jsx'
-" Plug 'kchmck/vim-coffee-script'
-" Plug 'elzr/vim-json', {'for': ['javascript','json']}
-" breaks some coffe shit.
-" Plug 'othree/javascript-libraries-syntax.vim', {'for': ['javascript','typescript']}
 " }}}
 
 " Python Plugins {{{
-Plug 'klen/python-mode', {'for': ['python']} "{{{
-let g:pymode_rope=0
-let g:pymode_run = 0
-let g:pymode_lint = 0
-let g:pymode_folding = 0
-"}}}
+Plug 'klen/python-mode', {'for': ['python']}
 " Plug 'davidhalter/jedi-vim', {'for': ['python']} "{{{
 "   let g:jedi#popup_on_dot=0
 " "}}}
@@ -455,6 +337,131 @@ nnoremap <silent> p p`]
 " command! -bang Q q<bang>
 " command! -bang QA qa<bang>
 " command! -bang Qa qa<bang>
+"}}}
+
+" Plugin Settings {{{
+
+" 'w0rp/ale' "{{{
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '∆'
+let g:ale_linters = {
+      \   'javascript': ['eslint'],
+      \}
+let g:ale_lint_on_text_changed = 'never'
+"}}}
+
+" " majutsushi/tagbar {{{
+"     let g:tagbar_sort = 0
+" " }}}
+
+" t9md/vim-quickhl "{{{
+nmap <leader>m <Plug>(quickhl-manual-this)
+xmap <leader>m <Plug>(quickhl-manual-this)
+nmap <leader>M <Plug>(quickhl-manual-reset)
+xmap <leader>M <Plug>(quickhl-manual-reset)
+"}}}
+
+
+" tpope/vim-surround "{{{
+nmap s <Plug>Ysurround
+" }}}
+
+
+" 'mhinz/vim-signify' "{{{
+let g:signify_update_on_focusgained = 1
+"}}}
+
+
+" 'tpope/vim-fugitive' "{{{
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR>
+nnoremap <silent> <leader>gb :Gblame<CR>
+nnoremap <silent> <leader>gg :Ggrep<cword><CR>
+nnoremap <silent> <leader>gl :Glog<CR>
+nnoremap <silent> <leader>gp :Git push<CR>
+nnoremap <silent> <leader>gw :Gwrite<CR>
+nnoremap <silent> <leader>gr :Gremove<CR>
+
+augroup _fugitive_buffer_delete
+  autocmd!
+  autocmd FileType gitcommit nmap <buffer> U :Git checkout -- <C-r><C-g><CR>
+  autocmd BufReadPost fugitive://* set bufhidden=delete
+augroup END
+"}}}
+"
+
+" 'AndrewRadev/switch.vim' " {{{
+nnoremap <c-c> :Switch<cr>
+" }}}
+
+
+" 'SirVer/ultisnips' "{{{
+let g:UltiSnipsExpandTrigger = '<C-j>'
+let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+"}}}
+
+
+" 'Lokaltog/vim-easymotion' "{{{
+let g:EasyMotion_smartcase = 1
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+"}}}
+
+
+" 'mhinz/vim-grepper' "{{{
+command! -nargs=* Ack GrepperAg <args>
+
+let g:grepper = {}
+let g:grepper.highlight=1
+let g:grepper.quickfix = 1
+let g:grepper.open = 1
+let g:grepper.stop = 1000
+let g:grepper.side = 1
+
+"}}}
+
+" 'kien/ctrlp.vim', "{{{
+let g:ctrlp_use_caching = 1
+let g:ctrlp_clear_cache_on_exit=1
+let g:ctrlp_max_height=40
+let g:ctrlp_show_hidden=1
+let g:ctrlp_follow_symlinks=1
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_max_files=20000
+let g:ctrlp_cache_dir='~/.config/nvim/.cache/ctrlp'
+let g:ctrlp_reuse_window='startify'
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+      \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+if executable('ag')
+  let g:ctrlp_user_command = 'ag --hidden %s --nocolor -l -g ""'
+endif
+"}}}
+
+
+" 'Valloric/MatchTagAlways' "{{{
+let g:mta_use_matchparen_group=0
+let g:mta_set_default_matchtag_color=0
+let g:mta_filetypes = {
+      \ 'javascript.jsx': 1,
+      \ 'html' : 1,
+      \ 'xhtml' : 1,
+      \ 'xml' : 1,
+      \ 'jinja' : 1
+      \}
+"}}}
+
+" 'klen/python-mode' "{{{
+let g:pymode_rope=0
+let g:pymode_run = 0
+let g:pymode_lint = 0
+let g:pymode_folding = 0
+"}}}
+
 "}}}
 
 " autocmd {{{
