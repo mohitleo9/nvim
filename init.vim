@@ -5,26 +5,14 @@ call plug#begin() "{{{
 " Core Plugins {{{
 Plug 'tpope/vim-sensible'
 Plug 'w0rp/ale'
-" Plug 'AndrewRadev/splitjoin.vim'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'editorconfig/editorconfig-vim'
-" Plug 'chrisbra/NrrwRgn'
 Plug 't9md/vim-quickhl'
-" Plug 'ton/vim-bufsurf'
-" Plug 'epeli/slimux'
-" Plug 'vim-airline/vim-airline' "{{{
-"     let g:airline#extensions#tabline#enabled = 1
-"     let g:airline_powerline_fonts = 1
-" "}}}
-" Plug 'vim-airline/vim-airline-themes'
-"     let g:airline_theme="luna"
 Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-repeat'
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" let g:deoplete#enable_at_startup = 1
-" Plug 'tpope/vim-eunuch'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
@@ -60,9 +48,6 @@ Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
 
 " Python Plugins {{{
 Plug 'klen/python-mode', {'for': ['python']}
-" Plug 'davidhalter/jedi-vim', {'for': ['python']} "{{{
-"   let g:jedi#popup_on_dot=0
-" "}}}
 " }}}
 
 " color schemes {{{
@@ -112,24 +97,24 @@ function! CloseWindowOrKillBuffer() "{{{
 endfunction "}}}
 
 " " taken from stevelosh learnvimscriptthehardway
-" function! GrepOperator(type)
-"   let saved_unnamed_register = @@
-"
-"   if a:type ==# 'v'
-"     normal! `<v`>y
-"   elseif a:type ==# 'char'
-"     normal! `[v`]y
-"   else
-"     return
-"   endif
-"
-"   " set the search register for the word
-"   let @/ = @@
-"
-"   silent execute "Ack ". shellescape(@@, 1)
-"
-"   let @@ = saved_unnamed_register
-" endfunction
+function! GrepOperator(type)
+  let saved_unnamed_register = @@
+
+  if a:type ==# 'v'
+    normal! `<v`>y
+  elseif a:type ==# 'char'
+    normal! `[v`]y
+  else
+    return
+  endif
+
+  " set the search register for the word
+  let @/ = @@
+
+  silent execute "Ack ". shellescape(@@, 1)
+
+  let @@ = saved_unnamed_register
+endfunction
 
 function! YankOnFocusGain() "{{{
   let @l = @*
@@ -461,6 +446,11 @@ let g:pymode_run = 0
 let g:pymode_lint = 0
 let g:pymode_folding = 0
 "}}}
+
+
+" 'Shougo/deoplete.nvim' "{{{
+let g:deoplete#enable_at_startup = 1
+" }}}
 
 "}}}
 
