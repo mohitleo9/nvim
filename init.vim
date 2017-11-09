@@ -356,7 +356,7 @@ nmap s <Plug>Ysurround
 
 
 " 'mhinz/vim-signify' "{{{
-" let g:signify_update_on_focusgained = 1
+let g:signify_update_on_focusgained = 1
 "}}}
 
 
