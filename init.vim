@@ -52,6 +52,10 @@ Plug 'klen/python-mode', {'for': ['python']}
 
 " color schemes {{{
 Plug 'icymind/NeoSolarized'
+Plug 'frankier/neovim-colors-solarized-truecolor-only' "{{{
+"   " let g:solarized_termcolors=256
+"   " let g:solarized_termtrans=1
+" "}}}
 "}}}
 
 call plug#end()
@@ -158,9 +162,8 @@ set smarttab                                        "use shiftwidth to enter tab
 set list                                            "highlight whitespace
 set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 set shiftround
-set linebreak
+set nowrap
 set diffopt=filler,vertical
-let &showbreak='↪ '
 
 set scrolloff=5                                     "always show content after scroll
 set scrolljump=5                                    "minimum number of lines to scroll
@@ -353,7 +356,7 @@ nmap s <Plug>Ysurround
 
 
 " 'mhinz/vim-signify' "{{{
-let g:signify_update_on_focusgained = 1
+" let g:signify_update_on_focusgained = 1
 "}}}
 
 
@@ -484,5 +487,7 @@ augroup END
 "}}}
 
 
+" ColorScheme {{{
 set background=dark
-colorscheme NeoSolarized
+colorscheme solarized
+" }}}
