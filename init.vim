@@ -136,17 +136,13 @@ set ttimeoutlen=50                                  "keycode timeout default set
 
 set mouse=a                                         "enable mouse
 set mousehide                                       "hide when characters are typed
-set history=1000                                    "number of command lines to remember
 set ttyfast                                         "assume fast terminal connection
 " set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
 set encoding=utf-8                                  "set encoding for text
 set clipboard=unnamed                             "sync with OS clipboard
 set hidden                                          "allow buffer switching without saving
-set autoread                                        "auto reload if file saved externally
 set fileformats+=mac                                "add mac to auto-detection of file format line endings
 set nrformats-=octal                                "always assume decimal numbers
-set showcmd
-set tags=tags;/
 set showfulltag
 set modeline
 set modelines=5
@@ -155,10 +151,7 @@ set nosol                                           "this keeps the cursor in th
 set noshelltemp                                     "use pipes
 
 " whitespace
-set backspace=indent,eol,start                      "allow backspacing everything in insert mode
-set autoindent                                      "automatically indent to match adjacent lines
 set expandtab                                       "spaces instead of tabs
-set smarttab                                        "use shiftwidth to enter tabs
 set list                                            "highlight whitespace
 set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 set shiftround
@@ -167,7 +160,6 @@ set diffopt=filler,vertical
 
 set scrolloff=5                                     "always show content after scroll
 set scrolljump=5                                    "minimum number of lines to scroll
-set display+=lastline
 set wildmenu                                        "show list for autocomplete
 set wildmode=list:longest,full
 set wildignorecase
@@ -180,8 +172,6 @@ set novisualbell
 set t_vb=
 
 " searching
-set hlsearch                                        "highlight searches
-set incsearch                                       "incremental searching
 set ignorecase                                      "ignore case for searching
 set smartcase                                       "do case-sensitive if there's a capital letter
 
@@ -194,7 +184,6 @@ endif
 
 " backups
 set backup
-set backupdir=~/.config/nvim/.cache/backup
 
 " swap files
 set directory=~/.config/nvim/.cache/swap
@@ -216,7 +205,6 @@ set showmatch                                       "automatically highlight mat
 set matchtime=2                                     "tens of a second to show matching parentheses
 set number
 set lazyredraw
-set laststatus=2
 set noshowmode
 set foldenable                                      "enable folds by default
 set foldmethod=syntax                               "fold via syntax of files
