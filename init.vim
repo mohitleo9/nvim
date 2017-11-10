@@ -334,12 +334,30 @@ let g:ale_linters = {
 let g:ale_lint_on_text_changed = 'never'
 "}}}
 
+" 'junegunn/fzf.vim' "{{{
+let g:fzf_history_dir = '~/.local/share/fzf-history'
+let g:fzf_buffers_jump = 1
+
+" nnoremap <c-p> :FZF<cr>
+"
+" " override fzf files command
+" command! -nargs=* Files call fzf#run({ 'source': 'ag --hidden --nocolor -l -g ""', 'sink':   'e', 'options': '-m -x +s', 'window':  'enew' })
+"
+" command! -bang -nargs=* Ag
+"   \ call fzf#vim#ag(<q-args>,
+"   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+"   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+"   \                 <bang>0)
+" nnoremap [ctrlp]<c-b> :Buffers<cr>
+" nnoremap [ctrlp]<c-m> :Maps<cr>
+" nnoremap [ctrlp]<c-c> :Commands<cr>
+" }}}
 " 'itchyny/lightline.vim' "{{{
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified' ] ],
+      \             [ 'readonly', 'relativepath', 'modified' ] ],
       \   'right': [ [ 'filetype' ] ]
       \ },
       \ 'component': {
