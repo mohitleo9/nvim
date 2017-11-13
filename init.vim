@@ -430,6 +430,10 @@ let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
 "}}}
 
+" 'mhinz/vim-startify' "{{{
+let g:startify_change_to_dir = 0
+let g:startify_change_to_vcs_root = 1
+" }}}
 
 " 'Lokaltog/vim-easymotion' "{{{
 let g:EasyMotion_smartcase = 1
@@ -494,6 +498,7 @@ let g:pymode_folding = 0
 " 'Shougo/deoplete.nvim' "{{{
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
+call deoplete#custom#set('ultisnips', 'rank', 9999)
 
 function! s:check_back_space() abort "{{{
   let col = col('.') - 1
