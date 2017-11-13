@@ -341,6 +341,9 @@ let g:ale_sign_warning = '∆'
 let g:ale_linters = {
       \   'javascript': ['eslint'],
       \}
+
+let g:ale_fixers = {}
+let g:ale_fixers.javascript = ['eslint']
 let g:ale_lint_on_text_changed = 'never'
 "}}}
 
@@ -448,11 +451,11 @@ map  N <Plug>(easymotion-prev)
 command! -nargs=* Ack GrepperAg <args>
 
 let g:grepper = {}
-let g:grepper.highlight=1
+" let g:grepper.highlight=1
 let g:grepper.quickfix = 1
 let g:grepper.open = 1
 let g:grepper.stop = 1000
-let g:grepper.side = 1
+" let g:grepper.side = 1
 
 "}}}
 
