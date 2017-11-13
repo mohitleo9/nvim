@@ -4,6 +4,7 @@
 call plug#begin() "{{{
 " Core Plugins {{{
 Plug 'tpope/vim-sensible'
+Plug 'ton/vim-bufsurf'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
@@ -16,6 +17,8 @@ Plug 'wellle/targets.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-repeat'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+Plug 'Shougo/echodoc.vim'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
@@ -44,8 +47,6 @@ Plug 'Valloric/MatchTagAlways'
 "}}}
 
 " Javascript Plugins {{{
-" Plug 'marijnh/tern_for_vim', {'for': ['javascript'], 'do': 'npm install'} " {{{
-" Plug 'mohitleo9/vim-fidget', {'do': 'npm install --production', 'on': 'VimFidget'}
 Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
 " }}}
 
@@ -124,10 +125,14 @@ function! YankOnFocusGain() "{{{
   let @l = @*
 endfunction "}}}
 " backup the system copied data in l register
-augroup _sync_clipboard_system "{{{
+augroup random_autocommands "{{{
   autocmd!
   autocmd FocusGained * call YankOnFocusGain()
+  " fixes the autoread. (calls autoread on changed files)
+  autocmd FocusGained * :checktime
 augroup END "}}}
+
+
 "}}}
 
 " base configuration {{{
@@ -145,6 +150,7 @@ set hidden                                          "allow buffer switching with
 set autoread                                        "auto reload if file saved externally
 set fileformats+=mac                                "add mac to auto-detection of file format line endings
 set nrformats-=octal                                "always assume decimal numbers
+set shortmess+=c                                    " hides'-- XXX completion (YYY)', 'match 1 of 2', 'The only match'
 set showcmd
 set tags=tags;/
 set showfulltag
@@ -324,6 +330,10 @@ nnoremap <silent> p p`]
 "}}}
 
 " Plugin Settings {{{
+" 'ton/vim-bufsurf' "{{{
+nnoremap <left>  :BufSurfBack<CR>
+nnoremap <right> :BufSurfForward<CR>
+"}}}
 
 " 'w0rp/ale' "{{{
 let g:ale_sign_error = '✗'
@@ -491,6 +501,10 @@ endfunction"}}}
 
 inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
 
+" }}}
+"
+" carlitux/deoplete-ternjs "{{{
+" let g:deoplete#sources#ternjs#docs = 1
 " }}}
 
 "}}}
