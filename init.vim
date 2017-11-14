@@ -16,9 +16,14 @@ Plug 'tpope/vim-surround'
 Plug 'wellle/targets.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-repeat'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'Shougo/echodoc.vim'
+
+" completion
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+" Plug 'Shougo/echodoc.vim'
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
@@ -501,7 +506,7 @@ let g:pymode_folding = 0
 " 'Shougo/deoplete.nvim' "{{{
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
-call deoplete#custom#set('ultisnips', 'rank', 9999)
+silent! call deoplete#custom#set('ultisnips', 'rank', 9999)
 
 function! s:check_back_space() abort "{{{
   let col = col('.') - 1
@@ -514,6 +519,10 @@ inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() 
 "
 " carlitux/deoplete-ternjs "{{{
 " let g:deoplete#sources#ternjs#docs = 1
+" }}}
+
+" roxma/nvim-completion-manager "{{{
+let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
 " }}}
 
 "}}}
