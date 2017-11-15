@@ -5,6 +5,7 @@ call plug#begin() "{{{
 " Core Plugins {{{
 Plug 'tpope/vim-sensible'
 Plug 'ton/vim-bufsurf'
+Plug 'dhruvasagar/vim-zoom'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
@@ -22,7 +23,7 @@ Plug 'tpope/vim-repeat'
 " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 " Plug 'Shougo/echodoc.vim'
 Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+" Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
@@ -39,7 +40,9 @@ Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-entire'
 Plug 'mhinz/vim-startify'
-Plug 'Lokaltog/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'mhinz/vim-grepper'
 Plug 'kien/ctrlp.vim'
 "}}}
@@ -253,7 +256,7 @@ nnoremap <up> :tabnext<CR>
 nnoremap <down> :tabprev<CR>
 
 " :on
-nnoremap gon :on<CR>
+" nnoremap gon :on<CR>
 
 " sane regex {{{
 nnoremap ? ?\v
@@ -339,6 +342,10 @@ nnoremap <silent> p p`]
 nnoremap <left>  :BufSurfBack<CR>
 nnoremap <right> :BufSurfForward<CR>
 "}}}
+
+" dhruvasagar/vim-zoom {{{
+nmap gon <Plug>(zoom-toggle)
+" }}}
 
 " 'w0rp/ale' "{{{
 let g:ale_sign_error = '✗'
@@ -444,15 +451,16 @@ let g:startify_change_to_vcs_root = 1
 " }}}
 
 " 'Lokaltog/vim-easymotion' "{{{
-let g:EasyMotion_smartcase = 1
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
+" let g:EasyMotion_smartcase = 1
+" map  / <Plug>(easymotion-sn)
+map / <Plug>(incsearch-easymotion-/)
+" omap / <Plug>(easymotion-tn)
+" map  n <Plug>(easymotion-next)
+" map  N <Plug>(easymotion-prev)
 "}}}
 
 
-" 'mhinz/vim-grepper' "{{{
+" 'mhinz/vie-grepper' "{{{
 command! -nargs=* Ack GrepperAg <args>
 
 let g:grepper = {}
