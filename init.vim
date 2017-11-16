@@ -5,7 +5,6 @@ call plug#begin() "{{{
 " Core Plugins {{{
 Plug 'tpope/vim-sensible'
 Plug 'ton/vim-bufsurf'
-Plug 'dhruvasagar/vim-zoom'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
@@ -18,6 +17,7 @@ Plug 'wellle/targets.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-repeat'
 
+Plug 'godlygeek/tabular'
 " completion
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
@@ -132,6 +132,22 @@ endfunction
 function! YankOnFocusGain() "{{{
   let @l = @*
 endfunction "}}}
+
+" https://stackoverflow.com/questions/13194428/is-better-way-to-zoom-windows-in-vim-than-zoomwin
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+
 " backup the system copied data in l register
 augroup random_autocommands "{{{
   autocmd!
@@ -248,6 +264,7 @@ nnoremap g/ :set operatorfunc=GrepOperator<cr>g@
 vnoremap g/ :<c-u>call GrepOperator(visualmode())<cr>
 
 nnoremap <leader>w :w<cr>
+nnoremap <silent> <c-a>z :ZoomToggle<CR>
 
 " remap arrow keys
 nnoremap <left> :bprev<CR>
@@ -256,7 +273,7 @@ nnoremap <up> :tabnext<CR>
 nnoremap <down> :tabprev<CR>
 
 " :on
-" nnoremap gon :on<CR>
+nnoremap gon :on<CR>
 
 " sane regex {{{
 nnoremap ? ?\v
@@ -343,10 +360,6 @@ nnoremap <left>  :BufSurfBack<CR>
 nnoremap <right> :BufSurfForward<CR>
 "}}}
 
-" dhruvasagar/vim-zoom {{{
-nmap gon <Plug>(zoom-toggle)
-" }}}
-
 " 'w0rp/ale' "{{{
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '∆'
@@ -358,6 +371,14 @@ let g:ale_fixers = {}
 let g:ale_fixers.javascript = ['eslint']
 let g:ale_lint_on_text_changed = 'never'
 "}}}
+"
+"
+" godlygeek/tabular "{{{
+nmap ga= :Tabularize /=.*/<CR>
+vmap ga= :Tabularize /=.*/<CR>
+nmap ga: :Tabularize /:.*/<CR>
+vmap ga: :Tabularize /:.*/<CR>
+" }}}
 
 " 'junegunn/fzf.vim' "{{{
 let g:fzf_history_dir = '~/.local/share/fzf-history'
@@ -377,17 +398,41 @@ let g:fzf_buffers_jump = 1
 " nnoremap [ctrlp]<c-m> :Maps<cr>
 " nnoremap [ctrlp]<c-c> :Commands<cr>
 " }}}
+
 " 'itchyny/lightline.vim' "{{{
+" XXX hack https://github.com/itchyny/lightline.vim/issues/55
+" it was either this or :h lightline-problem-12
+function! GetFilepath()
+  return '%f'
+endfunction
+
+" this acts as a way to update modified color.
+function! MyMode()
+  if &modified != get(s:, 'modified')
+    let g:lightline.component_type.filepathcustom = &modified ? 'error' : 'warning'
+    let s:modified = &modified
+    call lightline#init()
+    call lightline#update()
+  endif
+  return lightline#mode()
+endfunction
+
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'relativepath', 'modified' ] ],
+      \             [ 'readonly', 'filepathcustom', 'fakeModified' ] ],
       \   'right': [ [ 'filetype' ] ]
       \ },
-      \ 'component': {
-      \   'helloworld': 'Hello, world!'
+      \ 'component_function': {
+      \    'mode': 'MyMode',
       \ },
+      \ 'component_expand': {
+      \  'filepathcustom': 'GetFilepath',
+      \ },
+      \ 'component_type': {
+      \   'filepathcustom': 'warning',
+      \  },
       \ }
 " }}}
 
@@ -452,8 +497,8 @@ let g:startify_change_to_vcs_root = 1
 
 " 'Lokaltog/vim-easymotion' "{{{
 " let g:EasyMotion_smartcase = 1
-" map  / <Plug>(easymotion-sn)
-map / <Plug>(incsearch-easymotion-/)
+map  / <Plug>(easymotion-sn)
+" map / <Plug>(incsearch-easymotion-stay)
 " omap / <Plug>(easymotion-tn)
 " map  n <Plug>(easymotion-next)
 " map  N <Plug>(easymotion-prev)
@@ -521,7 +566,7 @@ function! s:check_back_space() abort "{{{
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
-inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
+" inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
 
 " }}}
 "
@@ -531,6 +576,8 @@ inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() 
 
 " roxma/nvim-completion-manager "{{{
 let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " }}}
 
 "}}}
