@@ -2,6 +2,7 @@
 " ============================================================================
 
 call plug#begin() "{{{
+
 " Core Plugins {{{
 Plug 'tpope/vim-sensible'
 Plug 'ton/vim-bufsurf'
@@ -23,7 +24,7 @@ Plug 'godlygeek/tabular'
 " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 " Plug 'Shougo/echodoc.vim'
 Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for' : 'javascript'}
 
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
@@ -31,6 +32,7 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-unimpaired'
 Plug 'AndrewRadev/switch.vim'
 Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'thinca/vim-visualstar'
 Plug 'tomtom/tcomment_vim'
 Plug 'terryma/vim-multiple-cursors'
@@ -42,7 +44,7 @@ Plug 'kana/vim-textobj-entire'
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
 Plug 'mhinz/vim-grepper'
-Plug 'kien/ctrlp.vim'
+" Plug 'kien/ctrlp.vim'
 "}}}
 
 " Web Plugins {{{
@@ -62,7 +64,7 @@ Plug 'klen/python-mode', {'for': ['python']}
 " }}}
 
 " color schemes {{{
-Plug 'icymind/NeoSolarized'
+" Plug 'icymind/NeoSolarized'
 Plug 'lifepillar/vim-solarized8'
 "}}}
 
@@ -385,19 +387,27 @@ vmap ga: :Tabularize /:.*/<CR>
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 let g:fzf_buffers_jump = 1
 
-" nnoremap <c-p> :FZF<cr>
+
+" command! -bang -nargs=* Files call fzf#run({'source': 'git ls-files', 'sink': 'e', 'right': '40%'})
 "
 " " override fzf files command
-" command! -nargs=* Files call fzf#run({ 'source': 'ag --hidden --nocolor -l -g ""', 'sink':   'e', 'options': '-m -x +s', 'window':  'enew' })
-"
+command! -nargs=* Files call fzf#run({
+      \ 'source' : 'ag --hidden --nocolor -l -g ""',
+      \ 'sink'   : 'e',
+      \ 'down'   : '~40%' })
+
+nnoremap <c-p> :Files<cr>
 " command! -bang -nargs=* Ag
 "   \ call fzf#vim#ag(<q-args>,
 "   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
 "   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
 "   \                 <bang>0)
-" nnoremap [ctrlp]<c-b> :Buffers<cr>
-" nnoremap [ctrlp]<c-m> :Maps<cr>
-" nnoremap [ctrlp]<c-c> :Commands<cr>
+
+nmap <space> [fzf]
+nnoremap [fzf] <nop>
+nnoremap [fzf]b :Buffers<cr>
+nnoremap [fzf]m :Maps<cr>
+nnoremap [fzf]c :Commands<cr>
 " }}}
 
 " 'itchyny/lightline.vim' "{{{
@@ -486,7 +496,7 @@ nnoremap <c-c> :Switch<cr>
 
 
 " 'SirVer/ultisnips' "{{{
-let g:UltiSnipsSnippetsDir = "~/.config/nvim/UltiSnips"
+let g:UltiSnipsSnippetsDir = '~/.config/nvim/UltiSnips'
 let g:UltiSnipsExpandTrigger = '<C-j>'
 let g:UltiSnipsJumpForwardTrigger = '<C-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
@@ -564,14 +574,14 @@ let g:pymode_folding = 0
 
 
 " 'Shougo/deoplete.nvim' "{{{
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-silent! call deoplete#custom#set('ultisnips', 'rank', 9999)
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_smart_case = 1
+" silent! call deoplete#custom#set('ultisnips', 'rank', 9999)
 
-function! s:check_back_space() abort "{{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
+" function! s:check_back_space() abort "{{{
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction"}}}
 
 " inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#mappings#manual_complete()
 
@@ -583,6 +593,7 @@ endfunction"}}}
 
 " roxma/nvim-completion-manager "{{{
 let g:cm_matcher = {'module': 'cm_matchers.fuzzy_matcher', 'case': 'smartcase'}
+let g:cm_refresh_default_min_word_len = 2
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " }}}
