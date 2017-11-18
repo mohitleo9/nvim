@@ -23,7 +23,7 @@ Plug 'godlygeek/tabular'
 " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 " Plug 'Shougo/echodoc.vim'
 Plug 'roxma/nvim-completion-manager'
-" Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
@@ -41,8 +41,6 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-entire'
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-easymotion.vim'
 Plug 'mhinz/vim-grepper'
 Plug 'kien/ctrlp.vim'
 "}}}
@@ -55,6 +53,7 @@ Plug 'Valloric/MatchTagAlways'
 "}}}
 
 " Javascript Plugins {{{
+" Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 Plug 'jelera/vim-javascript-syntax', {'for': 'javascript'}
 " }}}
 
@@ -245,7 +244,7 @@ let g:mapleader = ","
 set showmatch                                       "automatically highlight matching braces/brackets/etc.
 set matchtime=2                                     "tens of a second to show matching parentheses
 set number
-set lazyredraw
+" set lazyredraw
 set laststatus=2
 set noshowmode
 set foldenable                                      "enable folds by default
@@ -262,6 +261,8 @@ set cursorcolumn
 " grep operator (technically ack)
 nnoremap g/ :set operatorfunc=GrepOperator<cr>g@
 vnoremap g/ :<c-u>call GrepOperator(visualmode())<cr>
+
+nnoremap ,jd :exe 'GrepperAg "' . expand('<cword>') . '\s+:"'<CR>
 
 nnoremap <leader>w :w<cr>
 nnoremap <silent> <c-a>z :ZoomToggle<CR>
@@ -455,6 +456,7 @@ nmap s <Plug>Ysurround
 
 
 " 'mhinz/vim-signify' "{{{
+let g:signify_vcs_list = [ 'git' ]
 let g:signify_update_on_focusgained = 1
 "}}}
 
@@ -511,9 +513,14 @@ command! -nargs=* Ack GrepperAg <args>
 let g:grepper = {}
 " let g:grepper.highlight=1
 let g:grepper.quickfix = 1
-let g:grepper.open = 1
 let g:grepper.stop = 1000
 " let g:grepper.side = 1
+let g:grepper.open = 0
+
+augroup openquickfix
+  autocmd!
+  autocmd User Grepper copen
+augroup END
 
 "}}}
 
