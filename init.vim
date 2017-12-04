@@ -43,6 +43,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-entire'
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
+Plug 'haya14busa/vim-signjk-motion'
 Plug 'mhinz/vim-grepper'
 " Plug 'kien/ctrlp.vim'
 "}}}
@@ -161,45 +162,47 @@ augroup END "}}}
 "}}}
 
 " base configuration {{{
-set timeoutlen=500                                  "mapping timeout
-set ttimeoutlen=50                                  "keycode timeout default set here was 50
+set timeoutlen=500                                 " mapping timeout
+set ttimeoutlen=50                                 " keycode timeout default set here was 50
 
-set mouse=a                                         "enable mouse
-set mousehide                                       "hide when characters are typed
-set history=1000                                    "number of command lines to remember
-set ttyfast                                         "assume fast terminal connection
-" set viewoptions=folds,options,cursor,unix,slash     "unix/windows compatibility
-set encoding=utf-8                                  "set encoding for text
-set clipboard=unnamed                             "sync with OS clipboard
-set hidden                                          "allow buffer switching without saving
-set autoread                                        "auto reload if file saved externally
-set fileformats+=mac                                "add mac to auto-detection of file format line endings
-set nrformats-=octal                                "always assume decimal numbers
-set shortmess+=c                                    " hides'-- XXX completion (YYY)', 'match 1 of 2', 'The only match'
+set mouse=a                                        " enable mouse
+set mousehide                                      " hide when characters are typed
+set history=1000                                   " number of command lines to remember
+set ttyfast                                        " assume fast terminal connection
+set encoding=utf-8                                 " set encoding for text
+set clipboard=unnamed                              " sync with OS clipboard
+set hidden                                         " allow buffer switching without saving
+set autoread                                       " auto reload if file saved externally
+set fileformats+=mac                               " add mac to auto-detection of file format line endings
+set nrformats-=octal                               " always assume decimal numbers
+set shortmess+=c                                   " hides'-- XXX completion (YYY)', 'match 1 of 2', 'The only match'
 set showcmd
 set tags=tags;/
 set showfulltag
 set modeline
 set modelines=5
 set termguicolors
-set nosol                                           "this keeps the cursor in the same column when you hit G in visual block mode
-set noshelltemp                                     "use pipes
+set nosol                                          " this keeps the cursor in the same column when you hit G in visual block mode
+set noshelltemp                                    " use pipes
+set backspace=indent,eol,start                     " allow backspacing everything in insert mode
+set autoindent                                     " automatically indent to match adjacent lines
+set expandtab                                      " spaces instead of tabs
+set smarttab                                       " use shiftwidth to enter tabs
 
-" whitespace
-set backspace=indent,eol,start                      "allow backspacing everything in insert mode
-set autoindent                                      "automatically indent to match adjacent lines
-set expandtab                                       "spaces instead of tabs
-set smarttab                                        "use shiftwidth to enter tabs
-set list                                            "highlight whitespace
+let &tabstop=4                                     " number of spaces per tab for display
+let &softtabstop=4                                 " number of spaces per tab in insert mode
+let &shiftwidth=4                                  " number of spaces when indenting
+
+set list                                           " highlight whitespace
 set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 set shiftround
 set nowrap
 set diffopt=filler,vertical
 
-set scrolloff=5                                     "always show content after scroll
-set scrolljump=5                                    "minimum number of lines to scroll
+set scrolloff=5                                    " always show content after scroll
+set scrolljump=5                                   " minimum number of lines to scroll
 set display+=lastline
-set wildmenu                                        "show list for autocomplete
+set wildmenu                                       " show list for autocomplete
 set wildmode=list:longest,full
 set wildignorecase
 set splitbelow
@@ -237,8 +240,8 @@ call EnsureExists(&backupdir)
 call EnsureExists(&directory)
 "}}}
 
-let mapleader = ","
-let g:mapleader = ","
+let mapleader = ','
+let g:mapleader = ','
 "}}}
 
 
@@ -264,7 +267,7 @@ set cursorcolumn
 nnoremap g/ :set operatorfunc=GrepOperator<cr>g@
 vnoremap g/ :<c-u>call GrepOperator(visualmode())<cr>
 
-nnoremap ,jd :exe 'GrepperAg "' . expand('<cword>') . '\s+:"'<CR>
+nnoremap ,jd :exe 'Grepper -noswitch -noopen -jump -tool ag  -query "' . expand('<cword>') . '\s+:"'<CR>
 
 nnoremap <leader>w :w<cr>
 nnoremap <silent> <c-a>z :ZoomToggle<CR>
@@ -507,7 +510,12 @@ let g:startify_change_to_dir = 0
 let g:startify_change_to_vcs_root = 1
 " }}}
 
-" 'Lokaltog/vim-easymotion' "{{{
+" 'haya14busa/vim-signjk-motion "{{{
+map <leader>j <Plug>(signjk-j)
+map <leader>k <Plug>(signjk-k)
+"}}}
+
+" 'easymotion/vim-easymotion' "{{{
 " let g:EasyMotion_smartcase = 1
 map  / <Plug>(easymotion-sn)
 " map / <Plug>(incsearch-easymotion-stay)
