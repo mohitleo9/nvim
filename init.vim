@@ -9,6 +9,7 @@ Plug 'ton/vim-bufsurf'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'w0rp/ale'
+Plug 'rhysd/vim-grammarous'
 Plug 'itchyny/lightline.vim'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'editorconfig/editorconfig-vim'
