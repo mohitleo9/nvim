@@ -8,6 +8,7 @@ Plug 'tpope/vim-sensible'
 Plug 'ton/vim-bufsurf'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-peekaboo'
 Plug 'w0rp/ale'
 Plug 'rhysd/vim-grammarous'
 Plug 'itchyny/lightline.vim'
@@ -19,7 +20,7 @@ Plug 'wellle/targets.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-repeat'
 
-Plug 'godlygeek/tabular'
+Plug 'godlygeek/tabular', { 'on' : 'Tabularize' }
 " completion
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
@@ -29,9 +30,11 @@ Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for' : 'javascript'}
 
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-unimpaired'
 Plug 'AndrewRadev/switch.vim'
+Plug 'AndrewRadev/sideways.vim'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'thinca/vim-visualstar'
@@ -41,10 +44,10 @@ Plug 'Raimondi/delimitMate'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-indent'
-Plug 'kana/vim-textobj-entire'
+" Plug 'kana/vim-textobj-entire' " slow
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
-Plug 'haya14busa/vim-signjk-motion'
+" Plug 'haya14busa/vim-signjk-motion' " slow
 Plug 'mhinz/vim-grepper'
 " Plug 'kien/ctrlp.vim'
 "}}}
@@ -127,7 +130,7 @@ function! GrepOperator(type)
   " set the search register for the word
   let @/ = @@
 
-  silent execute "Ack ". shellescape(@@, 1)
+  silent execute 'Ack '. shellescape(@@, 1)
 
   let @@ = saved_unnamed_register
 endfunction
@@ -183,7 +186,7 @@ set showfulltag
 set modeline
 set modelines=5
 set termguicolors
-set nosol                                          " this keeps the cursor in the same column when you hit G in visual block mode
+set 'nostartofline'                                          " this keeps the cursor in the same column when you hit G in visual block mode
 set noshelltemp                                    " use pipes
 set backspace=indent,eol,start                     " allow backspacing everything in insert mode
 set autoindent                                     " automatically indent to match adjacent lines
@@ -241,7 +244,6 @@ call EnsureExists(&backupdir)
 call EnsureExists(&directory)
 "}}}
 
-let mapleader = ','
 let g:mapleader = ','
 "}}}
 
@@ -258,7 +260,6 @@ set foldmethod=syntax                               "fold via syntax of files
 set foldlevelstart=99                               "open all folds by default
 set cursorline
 set cursorcolumn
-
 
 "}}}
 
@@ -498,6 +499,10 @@ augroup END
 nnoremap <c-c> :Switch<cr>
 " }}}
 
+" AndrewRadev/sideways.vim " {{{
+nnoremap H :SidewaysLeft<cr>
+nnoremap L :SidewaysRight<cr>
+" }}}
 
 " 'SirVer/ultisnips' "{{{
 let g:UltiSnipsSnippetsDir = '~/.config/nvim/UltiSnips'
