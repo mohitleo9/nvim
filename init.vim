@@ -5,18 +5,18 @@ call plug#begin() "{{{
 
 " Core Plugins {{{
 Plug 'tpope/vim-sensible'
-Plug 'ton/vim-bufsurf'
+Plug 'ton/vim-bufsurf', { 'on' : 'DeferLoad' }
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/vim-peekaboo'
-Plug 'w0rp/ale'
-Plug 'rhysd/vim-grammarous'
+Plug 'junegunn/vim-peekaboo', { 'on' : 'DeferLoad' }
+Plug 'w0rp/ale', { 'on': 'DeferLoad' }
+Plug 'rhysd/vim-grammarous', { 'on' : 'DeferLoad' }
 Plug 'itchyny/lightline.vim'
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
 Plug 'editorconfig/editorconfig-vim'
 Plug 't9md/vim-quickhl'
-Plug 'tpope/vim-surround'
-Plug 'wellle/targets.vim'
+Plug 'tpope/vim-surround', { 'on' : 'DeferLoad' }
+Plug 'wellle/targets.vim', { 'on': 'DeferLoad' }
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-repeat'
 
@@ -29,21 +29,21 @@ Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-tern',  {'do': 'npm install', 'for' : 'javascript'}
 
 Plug 'mhinz/vim-signify'
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive', { 'on' : 'DeferLoad' }
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-git'
-Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-unimpaired', { 'on' : 'DeferLoad' }
 Plug 'AndrewRadev/switch.vim'
 Plug 'AndrewRadev/sideways.vim'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips', { 'on' : 'DeferLoad' }
+Plug 'honza/vim-snippets', { 'on' : 'DeferLoad' }
 Plug 'thinca/vim-visualstar'
-Plug 'tomtom/tcomment_vim'
+Plug 'tomtom/tcomment_vim', { 'on' : 'DeferLoad' }
 Plug 'terryma/vim-multiple-cursors'
-Plug 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate', { 'on' : 'DeferLoad' }
 Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-line'
-Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-line', { 'on' : 'DeferLoad' }
+Plug 'kana/vim-textobj-indent', { 'on' : 'DeferLoad' }
 " Plug 'kana/vim-textobj-entire' " slow
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
@@ -154,9 +154,20 @@ function! s:ZoomToggle() abort
 endfunction
 command! ZoomToggle call s:ZoomToggle()
 
+" https://www.reddit.com/r/vim/comments/7datnj/vimplug_cursorhold_and_ondemand_loading/
+" https://github.com/junegunn/vim-plug/issues/48
+function! DeferLoadFunc(timer)
+    if !exists('g:deferred') || g:deferred == 0
+        " fake command, add silent so vim doesn't complain that it does not exist
+        silent! DeferLoad
+        let g:deferred = 1
+    endif
+endfunction
+
 " backup the system copied data in l register
 augroup random_autocommands "{{{
   autocmd!
+  autocmd VimEnter * call timer_start(200, "DeferLoadFunc")
   autocmd FocusGained * call YankOnFocusGain()
   " fixes the autoread. (calls autoread on changed files)
   autocmd FocusGained * :checktime
@@ -186,7 +197,7 @@ set showfulltag
 set modeline
 set modelines=5
 set termguicolors
-set 'nostartofline'                                          " this keeps the cursor in the same column when you hit G in visual block mode
+set nostartofline                                          " this keeps the cursor in the same column when you hit G in visual block mode
 set noshelltemp                                    " use pipes
 set backspace=indent,eol,start                     " allow backspacing everything in insert mode
 set autoindent                                     " automatically indent to match adjacent lines
