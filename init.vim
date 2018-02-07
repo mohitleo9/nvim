@@ -5,7 +5,7 @@ call plug#begin() "{{{
 
 " Core Plugins {{{
 Plug 'tpope/vim-sensible'
-Plug 'ton/vim-bufsurf', { 'on' : 'DeferLoad' }
+Plug 'ton/vim-bufsurf'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-peekaboo', { 'on' : 'DeferLoad' }
